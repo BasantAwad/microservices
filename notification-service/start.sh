@@ -7,12 +7,12 @@ done
 echo "Database ready, running migrations..."
 python manage.py migrate
 echo "Waiting for RabbitMQ..."
-while ! nc -z rabbitmq 5672; do
+while ! timeout 1 bash -c 'cat < /dev/null > /dev/tcp/rabbitmq/5672'; do
   echo "Waiting for RabbitMQ..."
   sleep 2
 done
 echo "RabbitMQ ready, starting celery worker and beat..."
-celery -A notification_project worker --loglevel=info &
+celery -A notification_project worker -Q notifications,celery --loglevel=info &
 celery -A notification_project beat --loglevel=info &
 echo "Starting gunicorn server..."
 gunicorn notification_project.wsgi:application --bind 0.0.0.0:8000 --workers 3

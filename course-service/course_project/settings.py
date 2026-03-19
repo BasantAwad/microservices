@@ -76,17 +76,14 @@ WSGI_APPLICATION = 'course_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-import pymysql
-pymysql.install_as_MySQLdb()
+# import pymysql
+# pymysql.install_as_MySQLdb()
+
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.environ.get('DB_NAME', 'course_db'),
-        'USER': os.environ.get('DB_USER', 'basant'),
-        'PASSWORD': os.environ.get('DB_PASSWORD', 'kKI[Hr(CMxlHGUNg'),
-        'HOST': os.environ.get('DB_HOST', 'localhost'),
-        'PORT': os.environ.get('DB_PORT', '3306'),
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
@@ -124,7 +121,7 @@ USE_TZ = True
 
 # Celery Configuration
 import os
-CELERY_BROKER_URL = f'amqp://{os.environ.get("RABBIT_HOST", "localhost")}//'
+CELERY_BROKER_URL = f'amqp://guest:guest@{os.environ.get("RABBIT_HOST", "rabbitmq")}:5672//'
 CELERY_RESULT_BACKEND = 'rpc://'
 
 

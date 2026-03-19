@@ -1,7 +1,7 @@
 from celery import shared_task
 from .models import Notification
 
-@shared_task
+@shared_task(name='notification_app.tasks.process_enrollment_notification')
 def process_enrollment_notification(user_id, course_title):
     """
     Process notification for course enrollment.

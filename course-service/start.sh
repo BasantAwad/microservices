@@ -7,7 +7,7 @@ done
 echo "Database ready, running migrations..."
 python manage.py migrate
 echo "Waiting for RabbitMQ..."
-while ! nc -z rabbitmq 5672; do
+while ! timeout 1 bash -c 'cat < /dev/null > /dev/tcp/rabbitmq/5672'; do
   echo "Waiting for RabbitMQ..."
   sleep 2
 done

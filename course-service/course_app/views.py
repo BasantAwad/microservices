@@ -21,6 +21,5 @@ class RegisterCourseView(APIView):
         if not title or not user_id:
             return Response({'error': 'Title and user_id required'}, status=status.HTTP_400_BAD_REQUEST)
         course = Course.objects.create(title=title, user_id=user_id)
-        # Trigger celery task for notification
         send_enrollment_notification.delay(course.id, user_id)
         return Response({'status': 'Course registered', 'course_id': course.id}, status=status.HTTP_201_CREATED)
