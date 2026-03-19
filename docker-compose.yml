@@ -1,0 +1,98 @@
+services:
+  auth-db:
+    image: mysql:8.0
+    container_name: auth-db
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: auth_db
+      MYSQL_USER: basant
+      MYSQL_PASSWORD: kKI[Hr(CMxlHGUNg
+    ports:
+      - "33061:3306"
+    volumes:
+      - auth-db-data:/var/lib/mysql
+
+  course-db:
+    image: mysql:8.0
+    container_name: course-db
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: course_db
+      MYSQL_USER: basant
+      MYSQL_PASSWORD: kKI[Hr(CMxlHGUNg
+    ports:
+      - "33062:3306"
+    volumes:
+      - course-db-data:/var/lib/mysql
+
+  notification-db:
+    image: mysql:8.0
+    container_name: notification-db
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: notification_db
+      MYSQL_USER: basant
+      MYSQL_PASSWORD: kKI[Hr(CMxlHGUNg
+    ports:
+      - "33063:3306"
+    volumes:
+      - notification-db-data:/var/lib/mysql
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  auth-service:
+    build: ./auth-service
+    depends_on:
+      - auth-db
+    environment:
+      - DB_HOST=auth-db
+      - DB_PORT=3306
+      - DB_NAME=auth_db
+      - DB_USER=basant
+      - DB_PASSWORD=kKI[Hr(CMxlHGUNg
+    command: ['./start.sh']
+    ports:
+      - "8001:8000"
+
+  course-service:
+    build: ./course-service
+    depends_on:
+      - course-db
+      - rabbitmq
+    environment:
+      - DB_HOST=course-db
+      - DB_PORT=3306
+      - DB_NAME=course_db
+      - DB_USER=basant
+      - DB_PASSWORD=kKI[Hr(CMxlHGUNg
+      - RABBIT_HOST=rabbitmq
+    command: ['./start.sh']
+    ports:
+      - "8002:8000"
+
+  notification-service:
+    build: ./notification-service
+    depends_on:
+      - notification-db
+      - rabbitmq
+    environment:
+      - DB_HOST=notification-db
+      - DB_PORT=3306
+      - DB_NAME=notification_db
+      - DB_USER=basant
+      - DB_PASSWORD=kKI[Hr(CMxlHGUNg
+      - RABBIT_HOST=rabbitmq
+    command: ['./start.sh']
+    ports:
+      - "8003:8000"
+
+volumes:
+  auth-db-data:
+  course-db-data:
+  notification-db-data:
+
