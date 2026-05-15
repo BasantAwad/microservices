@@ -1,0 +1,87 @@
+{
+	"info": {
+		"name": "Microservices Project API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Auth Service - Register User",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"username\": \"testuser\",\n  \"email\": \"testuser@example.com\",\n  \"password\": \"securepassword123\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8001/api/auth/register/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"api",
+						"auth",
+						"register",
+						""
+					]
+				}
+			}
+		},
+		{
+			"name": "Course Service - Register Course",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"title\": \"Advanced Microservices Architecture\",\n  \"user_id\": 42\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8002/api/courses/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8002",
+					"path": [
+						"api",
+						"courses",
+						""
+					]
+				}
+			}
+		},
+		{
+			"name": "Notification Service - Get Notifications",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8003/api/notifications/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8003",
+					"path": [
+						"api",
+						"notifications",
+						""
+					]
+				}
+			}
+		}
+	]
+}
