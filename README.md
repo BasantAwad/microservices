@@ -1,4 +1,4 @@
-# Django Microservices Project
+# Node Microservices Project
 
 This project implements three microservices using Django and Docker:
 
@@ -7,6 +7,14 @@ This project implements three microservices using Django and Docker:
 3. **Notification Service** - Sends notifications
 
 Each service has its own MySQL database and communicates via RabbitMQ message broker.
+
+## Codebase Architecture (MVC)
+
+This project strictly follows the **Model-View-Controller (MVC)** architectural pattern to ensure clean separation of concerns:
+
+- **Model (`models.py`)**: Defines the data schema and database interactions.
+- **View (`views.py`)**: Handles the HTTP request/response cycle, routing, and JSON serialization.
+- **Controller (`controllers.py`)**: Contains all core business logic (e.g., validations, object creation, inter-service messaging) separate from the view layer.
 
 ## Setup
 
