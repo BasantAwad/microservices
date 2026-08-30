@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="https://raw.githubusercontent.com/BasantAwad/BasantAwad/main/assets/basant-terminal-banner.png" alt="Terminal-inspired project banner" width="100%" />
+</p>
+
 # Django Microservices Exercise
 
 A Dockerized microservices exercise implementing authentication, course registration, and notifications as separate Django services with independent MySQL databases and RabbitMQ messaging.
