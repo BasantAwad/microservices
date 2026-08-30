@@ -1,37 +1,23 @@
-# Node Microservices Project
+# Django Microservices Exercise
 
-This project implements three microservices using Django and Docker:
+A Dockerized microservices exercise implementing authentication, course registration, and notifications as separate Django services with independent MySQL databases and RabbitMQ messaging.
 
-1. **Auth Service** - Handles user authentication
-2. **Course Registration Service** - Manages course registrations
-3. **Notification Service** - Sends notifications
+## Architecture
 
-Each service has its own MySQL database and communicates via RabbitMQ message broker.
-
-## Codebase Architecture (MVC)
-
-This project strictly follows the **Model-View-Controller (MVC)** architectural pattern to ensure clean separation of concerns:
-
-- **Model (`models.py`)**: Defines the data schema and database interactions.
-- **View (`views.py`)**: Handles the HTTP request/response cycle, routing, and JSON serialization.
-- **Controller (`controllers.py`)**: Contains all core business logic (e.g., validations, object creation, inter-service messaging) separate from the view layer.
-
-## Setup
-
-1. Ensure Docker and Docker Compose are installed.
-2. Run `docker-compose up --build` to start all services.
-3. Access services at:
-   - Auth Service: http://localhost:8001
-   - Course Service: http://localhost:8002
-   - Notification Service: http://localhost:8003
-   - RabbitMQ Management: http://localhost:15672
+Each service follows a clear MVC-style boundary between models, request handling, and business logic. RabbitMQ carries inter-service notifications while each service owns its persistence and API behavior.
 
 ## Services
 
-- **Auth Service**: Port 8001, DB: auth_db (external port 33061)
-- **Course Service**: Port 8002, DB: course_db (external port 33062)
-- **Notification Service**: Port 8003, DB: notification_db (external port 33063)
+| Service | Responsibility |
+| --- | --- |
+| Auth | User authentication and identity workflows |
+| Course registration | Course enrollment and registration state |
+| Notification | Asynchronous notifications triggered by service events |
 
-## Message Broker
+## Run
 
-RabbitMQ is used for inter-service communication. Auth and Course services send messages to Notification Service.
+```bash
+docker compose up --build
+```
+
+Use the service-specific configuration and environment files to set database and broker connection details.
